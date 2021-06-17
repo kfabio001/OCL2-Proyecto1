@@ -6,6 +6,8 @@
     <fechaPublicacion año="1973"/>
   </libro>
 </biblioteca>
+<<<<<<< HEAD
+=======
 
 
 <biblioteca>
@@ -13,3 +15,4 @@
     <fechaPublicacion año="1973"/>
   </libro>
 </biblioteca>
+>>>>>>> 1b12fdc6b8708bf62b9047fc6ed7149c10d406d5
