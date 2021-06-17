@@ -75,8 +75,8 @@ var gramaticaXMLDescendente = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,8],$V1=[1,9],$V2=[1,14],$V3=[6,18],$V4=[2,5],$V5=[1,21],$V6=[2,6,12,18],$V7=[17,21,23],$V8=[2,22],$V9=[2,12,14,18],$Va=[2,12];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"XML":3,"T_CONF":4,"TAGS_LIST":5,"EOF":6,"TAG":7,"TAG_LIST":8,"TAG_APERTURA":9,"TAG_OP":10,"TAG_UNICO":11,"OPEN_TAG":12,"TAG_CIERRE":13,"cadena_letras":14,"MENU_TAG_APERTURA":15,"LISTA_ATRIBUTOS":16,"CIERRA_TAGAP":17,"openTag":18,"closingTag":19,"TAG_SELEC":20,"TAG_CIERRE_U":21,"t_congOp":22,"t_congClose":23,"ATRIBUTO":24,"LA":25,"atName":26,"atAsi":27,"atValue":28,"$accept":0,"$end":1},
-terminals_: {2:"error",6:"EOF",12:"OPEN_TAG",14:"cadena_letras",17:"CIERRA_TAGAP",18:"openTag",19:"closingTag",21:"TAG_CIERRE_U",22:"t_congOp",23:"t_congClose",26:"atName",27:"atAsi",28:"atValue"},
+symbols_: {"error":2,"XML":3,"T_CONF":4,"TAGS_LIST":5,"EOF":6,"TAG":7,"TAG_LIST":8,"TAG_APERTURA":9,"TAG_OP":10,"U_TAG":11,"tag_open":12,"TAG_CIERRE":13,"cadena_letras":14,"OP_AP":15,"LISTA_ATRIBUTOS":16,"close_gatap":17,"openTag":18,"closingTag":19,"TAG_SELEC":20,"close_tag":21,"t_congOp":22,"t_congClose":23,"ATRIBUTO":24,"LA":25,"atName":26,"atAsi":27,"atValue":28,"$accept":0,"$end":1},
+terminals_: {2:"error",6:"EOF",12:"tag_open",14:"cadena_letras",17:"close_gatap",18:"openTag",19:"closingTag",21:"close_tag",22:"t_congOp",23:"t_congClose",26:"atName",27:"atAsi",28:"atValue"},
 productions_: [0,[3,3],[3,2],[5,2],[8,2],[8,0],[7,2],[7,1],[7,2],[10,2],[10,2],[10,1],[9,2],[15,2],[15,1],[13,2],[11,2],[20,2],[20,1],[4,3],[16,2],[25,2],[25,0],[24,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
@@ -88,17 +88,15 @@ case 1:
             this.$ = new NodeDescXML('XML', '');
             this.$.childList.push($$[$0-2]);
             this.$.childList.push($$[$0-1]);
-
             return this.$;
          
 break;
 case 2:
 
-
+         //new ReporteGramatica("XML -> N TAGS_LIST EOF",  "XML.val = TAGS_LIST.val"      )
 
             this.$ = new NodeDescXML('XML', '');
             this.$.childList.push($$[$0-1]);
-
             return this.$;
         
 break;
@@ -106,8 +104,11 @@ case 3:
 
     this.$ = new NodeDescXML('TAGS_LIST', '');
     this.$.childList.push($$[$0-1]);
-    this.$.childList.push($$[$0]);
-
+    if($$[$0] === undefined || !$$[$0]) {
+        this.$.setChild(new NodeDescXML("EPSILON", ''));
+    } else {
+        this.$.setChild($$[$0]);
+    }
 
 
 break;
@@ -115,7 +116,11 @@ case 4:
 
         this.$ = new NodeDescXML('TAG_LIST', '');
         this.$.childList.push($$[$0-1]);
-        this.$.childList.push($$[$0]);
+        if($$[$0] === undefined || !$$[$0]) {
+        this.$.setChild(new NodeDescXML("EPSILON", ''));
+    } else {
+        this.$.setChild($$[$0]);
+    }
     
 break;
 case 5:
@@ -164,34 +169,34 @@ break;
 case 12:
 
         this.$ = new NodeDescXML('TAG_APERTURA', '');
-        this.$.childList.push($$[$0-1]);
+        this.$.childList.push(new NodeDescXML($$[$0-1], 'TAG_OPEN'));
         this.$.childList.push($$[$0]);
     
 break;
 case 13:
 
-        this.$ = new NodeDescXML('MENU_TAG_APERTURA', '');
+        this.$ = new NodeDescXML('OP_AP', '');
         this.$.childList.push($$[$0-1]);
-        this.$.childList.push($$[$0]);
+        this.$.childList.push(new NodeDescXML($$[$0], 'close_gatap'));
     
 break;
 case 14:
 
-        this.$ = new NodeDescXML('MENU_TAG_APERTURA', '');
-        this.$.childList.push($$[$0]);
+        this.$ = new NodeDescXML('OP_AP', '');
+        this.$.childList.push(new NodeDescXML($$[$0], 'close_gatap'));
     
 break;
 case 15:
 
-        this.$ = new NodeDescXML('MENU_TAG_APERTURA', '');
+        this.$ = new NodeDescXML('OP_AP', '');
         this.$.childList.push(new NodeDescXML($$[$0-1], 'openTag'));
         this.$.childList.push(new NodeDescXML($$[$0], 'CLOSING_TAG'));
     
 break;
 case 16:
 
-        this.$ = new NodeDescXML('TAG_UNICO', '');
-        this.$.childList.push($$[$0-1]);
+        this.$ = new NodeDescXML('U_TAG', '');
+        this.$.childList.push(new NodeDescXML($$[$0-1], 'TAG_OPEN'));
         this.$.childList.push($$[$0]);
     
 break;
@@ -199,55 +204,53 @@ case 17:
 
         this.$ = new NodeDescXML('TAG_SELEC', '');
         this.$.childList.push($$[$0-1]);
-        this.$.childList.push($$[$0]);
+        this.$.childList.push(new NodeDescXML($$[$0], 'CLOSE_TAG'));
     
 break;
 case 18:
 
         this.$ = new NodeDescXML('TAG_SELEC', '');
-        this.$.childList.push($$[$0]);
+        this.$.childList.push(new NodeDescXML($$[$0], 'CLOSE_TAG'));
 
     
 break;
 case 19:
 
             this.$ = new NodeDescXML('T_CONF', '');
-            this.$.childList.push(new NodeDescXML($$[$0-2], 't_congOp'));
+            this.$.childList.push(new NodeDescXML($$[$0-2], 'openTag'));
             this.$.childList.push($$[$0-1]);
-            this.$.childList.push(new NodeDescXML($$[$0-1], 't_congClose'));
+            this.$.childList.push(new NodeDescXML($$[$0-1], 'CLOSING_TAG'));
         
 break;
 case 20:
 
-        this.$ = new NodeDescXML('LISTA_ATRIBUTOS', '');
-        this.$.childList.push($$[$0-1]);
+    this.$ = new NodeDescXML('LISTA_ATRIBUTOS', '');
+    this.$.childList.push($$[$0-1]);
 
-        if($$[$0] === undefined || !$$[$0]) {
-            this.$.setChild(new NodeDescXML('LA', ''));
-        } else {
-            this.$.setChild($$[$0]);
-            this.$.setChild(new NodeDescXML("EPSILON", ''));
-        }
+    if($$[$0] === undefined || !$$[$0]) {
+        this.$.setChild(new NodeDescXML("EPSILON", ''));
+    } else {
+        this.$.setChild($$[$0]);
+    }
+
 
 break;
 case 21:
 
-    this.$ = new NodeDescXML('LA', '');
+    this.$ = new NodeDescXML('LISTA_ATRIBUTOS', '');
     this.$.childList.push($$[$0-1]);
     if($$[$0] === undefined || !$$[$0]) {
-        this.$.setChild(new NodeDescXML('LA', ''));
+        this.$.setChild(new NodeDescXML("EPSILON", ''));
     } else {
         this.$.setChild($$[$0]);
-        this.$.setChild(new NodeDescXML("EPSILON", ''));
     }
-
+ 
 break;
 case 23:
 
-        this.$ = new NodeDescXML('ATRIBUTO', '');
-        this.$.childList.push(new NodeDescXML($$[$0-2], 'atName'));
-        this.$.childList.push(new NodeDescXML($$[$0-1], 'atAsi'));
-        this.$.childList.push(new NodeDescXML($$[$0], 'atValue'));
+            this.$ = new NodeDescXML('LISTA_ATRIBUTOS', '');
+            this.$.childList.push($$[$0-2]);
+            this.$.childList.push($$[$0-1]);
         
 break;
 }
@@ -503,7 +506,7 @@ _handle_error:
 }};
 
 
-    const listaGramatical = [];
+
 
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){

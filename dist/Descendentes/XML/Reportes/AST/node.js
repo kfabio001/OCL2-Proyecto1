@@ -3,6 +3,7 @@ class NodeDescXML {
         this.value = value;
         this.type = type;
         this.childList = [];
+        this.nodeNumber = 0;
     }
 
     setChild(value) {

@@ -53,35 +53,35 @@ function init() {
 
 
             tree = gramaticaXMLDescendente.parse(contenido);
-            newTree = new TreeXPathDesc();
+            newTree = new TreeXMLDesc();
             console.log(tree);
-            // dotXMLDesc = newTree.graphXMLDescendente(tree);
-            // dotXMLDesc += '}';
+            dotXMLDesc = newTree.graphXMLDescendente(tree);
+            dotXMLDesc += '}';
+            console.log(dotXMLDesc);
+            let parsedData = vis.network.convertDot(dotXMLDesc);
 
-            // let parsedData = vis.network.convertDot(dotXMLDesc);
+            let data = {
+                nodes: parsedData.nodes,
+                edges: parsedData.edges
+            };
 
-            // let data = {
-            //     nodes: parsedData.nodes,
-            //     edges: parsedData.edges
-            // };
+            let options = {
+                layout: {
+                    hierarchical: {
+                        levelSeparation: 100,
+                        nodeSpacing: 100,
+                        parentCentralization: true
+                    }
+                }
+            };
 
-            // let options = {
-            //     layout: {
-            //         hierarchical: {
-            //             levelSeparation: 100,
-            //             nodeSpacing: 100,
-            //             parentCentralization: true
-            //         }
-            //     }
-            // };
+            // you can extend the options like a normal JSON variable:
+            options.nodes = {
+                color: "white"
+            };
 
-            // // you can extend the options like a normal JSON variable:
-            // options.nodes = {
-            //     color: "white"
-            // };
-
-            // // create a network
-            // let network = new vis.Network(xml_desc_graph, data, options);
+            // create a network
+            let network = new vis.Network(xml_desc_graph, data, options);
 
         });
 }
