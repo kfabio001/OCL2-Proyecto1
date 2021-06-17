@@ -93,7 +93,7 @@ case 1:
 break;
 case 2:
 
-         //new ReporteGramatica("XML -> N TAGS_LIST EOF",  "XML.val = TAGS_LIST.val"      )
+
 
             this.$ = new NodeDescXML('XML', '');
             this.$.childList.push($$[$0-1]);
